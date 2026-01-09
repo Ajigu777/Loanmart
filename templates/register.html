@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<!-- Tailwind Theme Config -->
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "primary": "#137fec",
+                    "primary-hover": "#0f6ac6",
+                    "background-light": "#ffffff",
+                    "background-off": "#f8fafc",
+                    "background-dark": "#101922",
+                    "text-main": "#111418",
+                    "text-muted": "#617589",
+                    "border-color": "#e2e8f0"
+                },
+                fontFamily: {
+                    "display": ["Inter", "sans-serif"],
+                    "body": ["Inter", "sans-serif"]
+                },
+                animation: {
+                    'fade-up': 'fadeUp 0.8s ease-out forwards',
+                    'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                },
+                keyframes: {
+                    fadeUp: {
+                        '0%': { opacity: '0', transform: 'translateY(20px)' },
+                        '100%': { opacity: '1', transform: 'translateY(0)' },
+                    }
+                }
+            },
+        },
+    }
+</script>
+
+<!-- External Stylesheet -->
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+</head>
+<body class="bg-gray-50 flex items-center justify-center h-screen">
+    <div class="bg-white p-10 rounded-xl shadow-lg w-full max-w-md">
+        <h2 class="text-2xl font-bold mb-6 text-center">Register</h2>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="mb-4 text-sm text-{{ 'green' if category=='success' else 'red' }}-500">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="POST" action="{{ url_for('register') }}" class="flex flex-col gap-4">
+            <input type="text" name="username" placeholder="Username" class="p-3 border rounded-lg">
+            <input type="email" name="email" placeholder="Email" class="p-3 border rounded-lg">
+            <input type="password" name="password" placeholder="Password" class="p-3 border rounded-lg">
+            <button type="submit" class="bg-green-500 text-white p-3 rounded-lg font-bold hover:bg-green-600 transition">Register</button>
+        </form>
+        <p class="mt-4 text-sm text-center">Already have an account? <a href="{{ url_for('login') }}" class="text-blue-500">Login</a></p>
+    </div>
+</body>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</html>
